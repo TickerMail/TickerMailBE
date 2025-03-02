@@ -1,4 +1,4 @@
-package com.lambda.stocksubscription.stock;
+package com.lambda.stocksubscription.stockprice;
 
 import java.util.HashMap;
 import java.util.Map;
