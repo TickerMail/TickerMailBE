@@ -170,7 +170,7 @@ public class EmailService {
     public void sendTestEmail(String email) throws MessagingException {
         User user = userRepository.findByEmail(email)
             .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다: " + email));
-
+        log.info(getPreviousTradingDate().toString());
         sendStockPriceEmailToUser(user, getPreviousTradingDate());
         log.info("테스트 이메일 발송 완료: {}", email);
     }
@@ -180,17 +180,7 @@ public class EmailService {
      */
     private LocalDate getPreviousTradingDate() {
         LocalDate today = LocalDate.now();
-        LocalDate previousDay = today.minusDays(1);
-
-        // 간단한 주말 처리 (실제로는 공휴일도 고려해야 함)
-        switch (previousDay.getDayOfWeek()) {
-            case SATURDAY:
-                return previousDay.minusDays(1); // 금요일
-            case SUNDAY:
-                return previousDay.minusDays(2); // 금요일
-            default:
-                return previousDay;
-        }
+        return today;
     }
 
     /**
