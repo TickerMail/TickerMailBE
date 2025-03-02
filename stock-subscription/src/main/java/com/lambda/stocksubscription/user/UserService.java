@@ -1,6 +1,8 @@
 package com.lambda.stocksubscription.user;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -70,5 +72,17 @@ public class UserService {
             .subscribed(user.isSubscribed())
             .interestedStocks(user.getInterestedStocks())
             .build();
+    }
+
+    @Transactional(readOnly = true)
+    public Set<String> getAllInterestedStocks() {
+        Set<String> allStocks = new HashSet<>();
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            if (user.getInterestedStocks() != null) {
+                allStocks.addAll(user.getInterestedStocks());
+            }
+        }
+        return allStocks;
     }
 }
