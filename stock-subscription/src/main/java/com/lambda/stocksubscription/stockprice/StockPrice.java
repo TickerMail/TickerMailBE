@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
 public class StockPrice {
 
     @Id
@@ -31,6 +33,12 @@ public class StockPrice {
     // 전일 종가 미국 기준으로는 장 마감 후 당일
     @Column(nullable = false)
     private BigDecimal closingPrice;
+
+    @Column(nullable = false)
+    private BigDecimal changeAmount;
+
+    @Column(nullable = false)
+    private BigDecimal changePercent;
 
     // 전일 미국 시간으로는 장 마감 날짜
     @Column(nullable = false)
