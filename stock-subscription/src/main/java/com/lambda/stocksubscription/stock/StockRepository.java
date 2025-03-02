@@ -13,6 +13,8 @@ public interface StockRepository extends JpaRepository<Stock, String> {
      * 특정 거래소의 모든 주식 조회
      */
     List<Stock> findByExchange(String exchange);
+    
+    Stock findBySymbol(String symbol);
 
     /**
      * 회사명에 특정 키워드가 포함된 주식 조회
