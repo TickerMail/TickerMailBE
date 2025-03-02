@@ -1,5 +1,7 @@
 package com.lambda.stocksubscription.stockprice;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +32,7 @@ public class StockPriceApiService {
     private final TokenManager tokenManager;
 
     // 미국주식 현재가 조회
-    public Map<String, Object> getUsStockPrice(String symbol, String excd) {
+    public StockPrice getUsStockPrices(String symbol, String excd) {
         tokenManager.validateToken();
 
         String url = baseUrl + "/price" + "?AUTH=&EXCD=" + excd + "&SYMB=" + symbol;
@@ -53,10 +55,21 @@ public class StockPriceApiService {
             Map.class
         );
 
-        log.info(response.toString());
+        log.info(response.getBody().get("output").toString());
+        Map output = (Map) response.getBody().get("output");
+
+        StockPrice stockPrice = StockPrice
+            .builder()
+            .symbol(symbol)
+            .closingPrice(new BigDecimal(String.valueOf(output.get("last"))))
+            .changeAmount(new BigDecimal(String.valueOf(output.get("diff"))))
+            .changePercent(new BigDecimal(String.valueOf(output.get("rate"))))
+            .tradingDate(LocalDate.now())
+            .build();
+
         // 응답 처리
         if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
-            return response.getBody();
+            return stockPrice;
         } else {
             throw new RuntimeException("Failed to get US stock price for symbol: " + symbol);
         }
