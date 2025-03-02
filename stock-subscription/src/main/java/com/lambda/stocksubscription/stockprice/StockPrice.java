@@ -13,7 +13,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "stock")
+@Table(name = "stock_price")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
