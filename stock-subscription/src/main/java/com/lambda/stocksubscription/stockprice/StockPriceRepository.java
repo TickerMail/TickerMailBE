@@ -17,6 +17,4 @@ public interface StockPriceRepository extends JpaRepository<StockPrice, Long> {
     List<String> findAllDistinctSymbols();
 
     List<StockPrice> findBySymbolInAndTradingDate(List<String> symbols, LocalDate tradingDate);
-
-    String findCompanyNameBySymbol(String symbol);
 }
