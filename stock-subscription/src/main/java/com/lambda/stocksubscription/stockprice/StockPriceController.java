@@ -1,10 +1,10 @@
-package com.lambda.stocksubscription.stock;
+package com.lambda.stocksubscription.stockprice;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class StockController {
-    private final StockApiService stockApiService;
+public class StockPriceController {
+    private final StockPriceApiService stockApiService;
 }

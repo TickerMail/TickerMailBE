@@ -1,11 +1,7 @@
-package com.lambda.stocksubscription.stock;
+package com.lambda.stocksubscription.stockprice;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;import lombok.extern.slf4j.Slf4j;
-import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.DefaultAsyncHttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class StockApiService {
+public class StockPriceApiService {
 
     @Value("${stock.api.key}")
     private String appKey;
@@ -65,18 +61,4 @@ public class StockApiService {
             throw new RuntimeException("Failed to get US stock price for symbol: " + symbol);
         }
     }
-
-    public void test() throws IOException {
-        AsyncHttpClient client = new DefaultAsyncHttpClient();
-        client.prepare("GET", "https://yahoo-finance15.p.rapidapi.com/api/v1/markets/quote?ticker=AAPL&type=STOCKS")
-            .setHeader("x-rapidapi-key", "3cd7b89e3bmsh6da9223aa6ce497p17d456jsn4ed70a02fe73")
-            .setHeader("x-rapidapi-host", "yahoo-finance15.p.rapidapi.com")
-            .execute()
-            .toCompletableFuture()
-            .thenAccept(System.out::println)
-            .join();
-
-        client.close();
-    }
-
 }
