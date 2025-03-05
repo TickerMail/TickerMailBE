@@ -47,7 +47,7 @@ public class EmailService {
     /**
      * 매일 오전 9시에 전일 종가 이메일 발송
      */
-//    @Scheduled(cron = "0 0 9 * * ?")
+    @Scheduled(cron = "0 0 9 * * ?")
     @Transactional(readOnly = true)
     public void sendDailyClosingPriceEmails() {
         if (!emailEnabled) {
