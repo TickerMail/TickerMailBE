@@ -1,6 +1,8 @@
 package com.lambda.stocksubscription.user;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +54,27 @@ public class UserController {
     public ResponseEntity<List<UserDTO>> getAllSubscribedUsers() {
         List<UserDTO> users = userService.getAllSubscribedUsers();
         return ResponseEntity.ok(users);
+    }
+
+    @PostMapping("/unsubscribe")
+    public ResponseEntity<Map<String, Object>> unsubscribe(
+        @RequestBody Map<String, String> request) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            String email = request.get("email");
+            if (email == null || email.isEmpty()) {
+                response.put("success", false);
+                response.put("message", "이메일 주소가 제공되지 않았습니다");
+                return ResponseEntity.badRequest().body(response);
+            }
+            userService.toggleSubscription(email);
+            response.put("success", true);
+            response.put("message", "구독이 성공적으로 취소되었습니다");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "구독 취소 처리 중 오류가 발생했습니다");
+            return ResponseEntity.internalServerError().body(response);
+        }
     }
 }
