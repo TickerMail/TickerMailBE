@@ -73,6 +73,7 @@ jobs:
             
             # .env 파일 생성
             cat > .env << EOF
+            MYSQL_USER=${{ secrets.MYSQL_USER }}
             MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
             MYSQL_DATABASE=stock_subscription
             DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
