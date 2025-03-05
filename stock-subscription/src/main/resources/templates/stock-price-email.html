@@ -1,102 +1,44 @@
-<!-- src/main/resources/templates/stock-price-email.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>미국 주식 전일 종가 정보</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      color: #333;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .header {
-      background-color: #003366;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    .content {
-      padding: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-    }
-    th {
-      background-color: #f2f2f2;
-      border-bottom: 2px solid #ddd;
-      padding: 12px;
-      text-align: left;
-    }
-    td {
-      border-bottom: 1px solid #ddd;
-      padding: 12px;
-    }
-    tr:hover {
-      background-color: #f9f9f9;
-    }
-    .positive {
-      color: #28a745;
-    }
-    .negative {
-      color: #dc3545;
-    }
-    .footer {
-      background-color: #f2f2f2;
-      padding: 15px;
-      text-align: center;
-      font-size: 0.8em;
-      color: #666;
-      margin-top: 30px;
-    }
-    .sector-tag {
-      background-color: #e9ecef;
-      border-radius: 4px;
-      padding: 3px 6px;
-      font-size: 0.8em;
-      color: #495057;
-    }
-  </style>
 </head>
-<body>
-<div class="header">
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto;">
+<div class="header" style="background-color: #003366; color: white; padding: 20px; text-align: center;">
   <h1>미국 주식 전일 종가 정보</h1>
 </div>
 
-<div class="content">
+<div class="content" style="padding: 20px;">
   <p>안녕하세요, <strong th:text="${userName}">투자자</strong>님!</p>
 
   <p><strong th:text="${tradingDate}">2023년 10월 10일</strong> 미국 주식 시장의 거래 결과를 알려드립니다.</p>
 
-  <table>
+  <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
     <thead>
     <tr>
-      <th>심볼</th>
-      <th>회사명</th>
-      <th>거래소</th>
-      <th>종가</th>
-      <th>변동</th>
-      <th>변동률</th>
+      <th style="background-color: #f2f2f2; border-bottom: 2px solid #ddd; padding: 12px; text-align: left;">심볼</th>
+      <th style="background-color: #f2f2f2; border-bottom: 2px solid #ddd; padding: 12px; text-align: left;">회사명</th>
+      <th style="background-color: #f2f2f2; border-bottom: 2px solid #ddd; padding: 12px; text-align: left;">거래소</th>
+      <th style="background-color: #f2f2f2; border-bottom: 2px solid #ddd; padding: 12px; text-align: left;">종가</th>
+      <th style="background-color: #f2f2f2; border-bottom: 2px solid #ddd; padding: 12px; text-align: left;">변동</th>
+      <th style="background-color: #f2f2f2; border-bottom: 2px solid #ddd; padding: 12px; text-align: left;">변동률</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="stock : ${stocks}">
-      <td th:text="${stock.symbol}">AAPL</td>
-      <td>
+    <tr th:each="stock : ${stocks}" style="hover: background-color: #f9f9f9;">
+      <td style="border-bottom: 1px solid #ddd; padding: 12px;" th:text="${stock.symbol}">AAPL</td>
+      <td style="border-bottom: 1px solid #ddd; padding: 12px;">
         <span th:text="${stock.companyName}">Apple Inc.</span>
-<!--        <span class="sector-tag" th:if="${stock.sector}" th:text="${stock.sector}">Technology</span>-->
+        <!--        <span class="sector-tag" th:if="${stock.sector}" th:text="${stock.sector}" style="background-color: #e9ecef; border-radius: 4px; padding: 3px 6px; font-size: 0.8em; color: #495057;">Technology</span>-->
       </td>
-      <td th:text="${stock.exchange}">NASDAQ</td>
-      <td th:text="${stock.closingPrice}">150.25</td>
-      <td th:class="${stock.positive ? 'positive' : 'negative'}">
+      <td style="border-bottom: 1px solid #ddd; padding: 12px;" th:text="${stock.exchange}">NASDAQ</td>
+      <td style="border-bottom: 1px solid #ddd; padding: 12px;" th:text="${stock.closingPrice}">150.25</td>
+      <td th:class="${stock.positive ? 'positive' : 'negative'}" style="border-bottom: 1px solid #ddd; padding: 12px;" th:style="${stock.positive ? 'color: #28a745;' : 'color: #dc3545;'}">
         <span th:if="${stock.positive && stock.changeAmount instanceof T(java.math.BigDecimal)}">+</span>
         <span th:text="${stock.changeAmount}">2.15</span>
       </td>
-      <td th:class="${stock.positive ? 'positive' : 'negative'}">
+      <td th:class="${stock.positive ? 'positive' : 'negative'}" style="border-bottom: 1px solid #ddd; padding: 12px;" th:style="${stock.positive ? 'color: #28a745;' : 'color: #dc3545;'}">
         <span th:if="${stock.positive && stock.changePercent instanceof T(java.math.BigDecimal)}">+</span>
         <span th:if="${stock.changePercent instanceof T(java.math.BigDecimal)}"
               th:text="${#numbers.formatDecimal(stock.changePercent, 1, 2) + '%'}">1.45%</span>
@@ -113,11 +55,11 @@
   </p>
 </div>
 
-<div class="footer">
+<div class="footer" style="background-color: #f2f2f2; padding: 15px; text-align: center; font-size: 0.8em; color: #666; margin-top: 30px;">
   <p>
     © 2023 미국 주식 구독 서비스 |
-    <a href="https://yourwebsite.com/unsubscribe">구독 취소</a> |
-    <a href="https://yourwebsite.com/settings">설정 변경</a>
+    <a href="http://localhost:3000/unsubscribe">구독 취소</a> |
+    <a href="http://localhost:3000/dashboard">설정 변경</a>
   </p>
   <p>
     본 이메일의 내용은 투자 권유나 금융 자문이 아닙니다. 투자 결정 시 전문가와 상담하세요.

@@ -57,9 +57,9 @@ public class UserController {
     }
 
     @PostMapping("/unsubscribe")
-    public ResponseEntity<Map<String, Object>> unsubscribe(
-        @RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> unsubscribe(@RequestBody Map<String, String> request) {
         Map<String, Object> response = new HashMap<>();
+        // TODO: token validation
         try {
             String email = request.get("email");
             if (email == null || email.isEmpty()) {
