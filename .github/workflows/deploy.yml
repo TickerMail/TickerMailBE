@@ -11,6 +11,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Create application properties from secret
+        run: |
+          # src/main/resources 디렉토리가 없으면 생성
+          mkdir -p src/main/resources
+          
+          # GitHub Secret에서 properties 파일 내용을 가져와 파일 생성
+          echo "${{ secrets.APPLICATION_PROPERTIES }}" > src/main/resources/application-prod.properties
+          
+          echo "application-prod.properties has been created from secret."
         
       - name: Set up JDK 17
         uses: actions/setup-java@v3
