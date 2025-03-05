@@ -2,6 +2,8 @@ package com.lambda.stocksubscription.stock;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Collections;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -146,5 +148,21 @@ public class StockDataLoaderService implements CommandLineRunner {
         } else {
             throw new IllegalArgumentException("지원하지 않는 거래소입니다: " + exchange);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<StockDTO> loadAllStocks() {
+        return stockRepository.findAll()
+            .stream()
+            .map(this::convertDTO)
+            .collect(Collectors.toList());
+    }
+
+    private StockDTO convertDTO(Stock stock) {
+        return StockDTO.builder()
+            .ticker(stock.getSymbol())
+            .name(stock.getCompanyName())
+            .exchange(stock.getExchange())
+            .build();
     }
 }
