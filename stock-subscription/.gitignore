@@ -37,5 +37,5 @@ out/
 .vscode/
 
 /src/main/resources/application.properties
-./docker-compose.yml
-./.env
+docker-compose.yml
+.env
