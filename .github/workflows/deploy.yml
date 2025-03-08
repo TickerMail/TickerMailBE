@@ -60,8 +60,8 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "deploy-compose.yml"
-          target: "/home/${{ secrets.EC2_USERNAME }}
-          
+          target: "/home/${{ secrets.EC2_USERNAME }}"
+
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
