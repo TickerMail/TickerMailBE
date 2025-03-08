@@ -14,12 +14,10 @@ jobs:
 
       - name: Create application properties from secret
         run: |
-          # src/main/resources 디렉토리가 없으면 생성
-          mkdir -p src/main/resources
-          
-          # GitHub Secret에서 properties 파일 내용을 가져와 파일 생성
-          echo "${{ secrets.APPLICATION_PROPERTIES }}" > src/main/resources/application-prod.properties
-          
+          cd ./src/main/resources
+          touch ./application.properties
+          echo "${{ secrets.APPLICATION_PROD }}" > ./application.properties
+                    
           echo "application-prod.properties has been created from secret."
         
       - name: Set up JDK 17
@@ -64,8 +62,9 @@ jobs:
             echo "${{ secrets.DOCKER_COMPOSE }}" > ~/docker-compose.yml            
             
             # Docker Compose 실행
-            deploy-compose pull
-            deploy-compose down || true
-            deploy-compose up -d
+            docker rmi $(docker images -q)
+            docker-compose pull
+            docker-compose down || true
+            docker-compose up -d
             
             echo "애플리케이션이 성공적으로 배포되었습니다."
