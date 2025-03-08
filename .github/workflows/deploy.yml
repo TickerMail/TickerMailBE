@@ -61,6 +61,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "deploy-compose.yml"
           target: "/home/${{ secrets.EC2_USERNAME }}/docker-compose.yml"
+          strip_components: 0
           
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
