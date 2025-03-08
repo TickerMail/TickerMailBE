@@ -19,11 +19,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequiredArgsConstructor
 @Slf4j
 public class DollarFetchService {
-    @Value("${exchange.api.key}")
-    private String apiKey;
+//    @Value("${exchange.api.key}")
+    private String apiKey = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON";
 
-    @Value("${exchange.api.url}")
-    private String apiUrl;
+//    @Value("${exchange.api.url}")
+    private String apiUrl = "iemtAjU7uysXYY9aXhOE4kEVEMIhrprM";
 
     private final RestTemplate restTemplate;
 
