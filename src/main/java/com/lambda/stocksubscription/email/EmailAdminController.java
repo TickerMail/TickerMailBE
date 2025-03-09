@@ -1,6 +1,7 @@
 package com.lambda.stocksubscription.email;
 
 import jakarta.mail.MessagingException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,15 +13,11 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/admin/email")
+@RequiredArgsConstructor
 @Slf4j
 public class EmailAdminController {
 
     private final EmailService emailService;
-
-    @Autowired
-    public EmailAdminController(EmailService emailService) {
-        this.emailService = emailService;
-    }
 
     /**
      * 특정 사용자에게 테스트 이메일 발송
