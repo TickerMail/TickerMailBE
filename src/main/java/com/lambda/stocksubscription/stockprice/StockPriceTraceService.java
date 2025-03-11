@@ -23,7 +23,7 @@ public class StockPriceTraceService {
     private final StockRepository stockRepository;
     private final UserService userService;
 
-    @Scheduled(cron = "0 0 7 * * ?") // 매일 오전 7시에 실행
+    @Scheduled(cron = "0 0 7 * * ?", zone = "Asia/Seoul") // 매일 오전 7시에 실행
     @Transactional
     public void updateDailyStockPrices() {
         log.info("Starting daily stock price update...");
