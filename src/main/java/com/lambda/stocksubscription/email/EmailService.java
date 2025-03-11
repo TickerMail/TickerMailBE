@@ -1,5 +1,8 @@
 package com.lambda.stocksubscription.email;
 
+import com.lambda.stocksubscription.dollar.Dollar;
+import com.lambda.stocksubscription.dollar.DollarFetchService;
+import com.lambda.stocksubscription.dollar.DollarRepository;
 import com.lambda.stocksubscription.stock.Stock;
 import com.lambda.stocksubscription.stock.StockRepository;
 import com.lambda.stocksubscription.stockprice.StockPrice;
@@ -33,7 +36,9 @@ public class EmailService {
     private final UserRepository userRepository;
     private final StockRepository stockRepository;
     private final StockPriceRepository stockPriceRepository;
+    private final DollarRepository dollarRepository;
     private final TemplateEngine templateEngine;
+    private final DollarFetchService dollarFetchService;
 
     @Value("${spring.mail.username}")
     private String fromEmail;
@@ -47,7 +52,7 @@ public class EmailService {
     /**
      * 매일 오전 9시에 전일 종가 이메일 발송
      */
-    @Scheduled(cron = "0 0 9 * * ?")
+    @Scheduled(cron = "0 0 9 * * ?", zone = "Asia/Seoul")
     @Transactional(readOnly = true)
     public void sendDailyClosingPriceEmails() {
         if (!emailEnabled) {
@@ -82,7 +87,7 @@ public class EmailService {
      * 특정 사용자에게 주식 가격 이메일 발송
      */
     @Transactional(readOnly = true)
-    public void sendStockPriceEmailToUser(User user, LocalDate tradingDate) throws MessagingException {
+    public void sendStockPriceEmailToUser(User user, LocalDate tradingDate) throws Exception {
         log.info("사용자 {}의 관심 종목 {}", user.getEmail(), user.getInterestedStocks());
 
         // 관심 종목이 없으면 이메일 발송 안함
@@ -147,6 +152,15 @@ public class EmailService {
 
         context.setVariable("stocks", stockDataList);
 
+        // 환율 데이터 넣기
+        Map<String, Object> exchangeRateData = new HashMap<>();
+        Dollar exchangeRate = dollarRepository.findBySearchDate(tradingDate);
+        exchangeRateData.put("date", exchangeRate.getSearchDate().toString());
+        exchangeRateData.put("usdKrwBuy", exchangeRate.getBuyingRate());
+        exchangeRateData.put("usdKrwSell", exchangeRate.getSellingRate());
+
+        context.setVariable("exchangeRate", exchangeRate);
+
         // Thymeleaf 템플릿으로 이메일 본문 생성
         String emailContent = templateEngine.process("stock-price-email", context);
 
@@ -167,7 +181,7 @@ public class EmailService {
     /**
      * 단일 사용자에게 테스트 이메일 발송 (관리자용)
      */
-    public void sendTestEmail(String email) throws MessagingException {
+    public void sendTestEmail(String email) throws Exception {
         User user = userRepository.findByEmail(email)
             .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다: " + email));
         log.info(getPreviousTradingDate().toString());
