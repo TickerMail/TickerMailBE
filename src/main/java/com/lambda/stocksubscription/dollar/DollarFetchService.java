@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -31,6 +32,7 @@ public class DollarFetchService {
 
     private final ObjectMapper objectMapper;
 
+    @Scheduled(cron = "0 0 8 * * ?", zone = "Asia/Seoul")
     public Dollar fetchExchangeRates() throws Exception {
         // 오늘 날짜 포맷팅 (YYYYMMDD)
         String today = getSearchDay().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
