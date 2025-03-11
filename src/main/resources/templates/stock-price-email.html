@@ -14,6 +14,22 @@
 
   <p><strong th:text="${tradingDate}">2023년 10월 10일</strong> 미국 주식 시장의 거래 결과를 알려드립니다.</p>
 
+  <!-- 환율 정보 섹션 추가 -->
+  <div class="exchange-rate" style="background-color: #f8f9fa; border-radius: 5px; padding: 15px; margin-bottom: 20px;">
+    <h3 style="margin-top: 0; color: #003366;">오늘의 환율 정보</h3>
+    <p>기준 시간: <strong th:text="${exchangeRate.date}">2023년 10월 10일 16:30</strong></p>
+    <table style="width: 100%; border-collapse: collapse;">
+      <tr>
+        <td style="padding: 8px 0;"><strong>달러 살 때 (송금):</strong></td>
+        <td style="padding: 8px 0; text-align: right;"><span th:text="${exchangeRate.usdKrwBuy}">1,330.45</span> 원</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 0;"><strong>달러 팔 때 (송금):</strong></td>
+        <td style="padding: 8px 0; text-align: right;"><span th:text="${exchangeRate.usdKrwSell}">1,310.45</span> 원</td>
+      </tr>
+    </table>
+  </div>
+
   <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
     <thead>
     <tr>
@@ -26,7 +42,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="stock : ${stocks}" style="hover: background-color: #f9f9f9;">
+    <tr th:each="stock : ${stocks}" style="hover: 'background-color: #f9f9f9;'">
       <td style="border-bottom: 1px solid #ddd; padding: 12px;" th:text="${stock.symbol}">AAPL</td>
       <td style="border-bottom: 1px solid #ddd; padding: 12px;">
         <span th:text="${stock.companyName}">Apple Inc.</span>
