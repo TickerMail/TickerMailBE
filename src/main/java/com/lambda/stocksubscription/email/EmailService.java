@@ -2,6 +2,7 @@ package com.lambda.stocksubscription.email;
 
 import com.lambda.stocksubscription.dollar.Dollar;
 import com.lambda.stocksubscription.dollar.DollarFetchService;
+import com.lambda.stocksubscription.dollar.DollarRepository;
 import com.lambda.stocksubscription.stock.Stock;
 import com.lambda.stocksubscription.stock.StockRepository;
 import com.lambda.stocksubscription.stockprice.StockPrice;
@@ -35,6 +36,7 @@ public class EmailService {
     private final UserRepository userRepository;
     private final StockRepository stockRepository;
     private final StockPriceRepository stockPriceRepository;
+    private final DollarRepository dollarRepository;
     private final TemplateEngine templateEngine;
     private final DollarFetchService dollarFetchService;
 
@@ -152,7 +154,7 @@ public class EmailService {
 
         // 환율 데이터 넣기
         Map<String, Object> exchangeRateData = new HashMap<>();
-        Dollar exchangeRate = dollarFetchService.fetchExchangeRates();
+        Dollar exchangeRate = dollarRepository.findBySearchDate(tradingDate);
         exchangeRateData.put("date", exchangeRate.getSearchDate().toString());
         exchangeRateData.put("usdKrwBuy", exchangeRate.getBuyingRate());
         exchangeRateData.put("usdKrwSell", exchangeRate.getSellingRate());
