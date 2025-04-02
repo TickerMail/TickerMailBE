@@ -28,4 +28,13 @@ public class Dollar {
     private BigDecimal buyingRate;
 
     private BigDecimal sellingRate;
+
+    @Override
+    public String toString() {
+        return "Dollar{" +
+            "searchDate=" + searchDate +
+            ", buyingRate=" + buyingRate +
+            ", sellingRate=" + sellingRate +
+            '}';
+    }
 }
