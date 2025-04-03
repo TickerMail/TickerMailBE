@@ -53,11 +53,11 @@ public class CircuitBreaker {
     private Dollar callService(String url, LocalDate date) {
         log.info("API 호출: {}", url);
         // 최대 재시도 횟수만큼 시도
-        for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
+        for (int attempt = 0; attempt < RESET_TIMEOUT_SECONDS; attempt++) {
             try {
                 if (attempt > 0) {
                     // 재시도 전 잠시 대기
-                    Thread.sleep(500);
+                    Thread.sleep(60000);
                     log.info("API 호출 재시도 {}/{}", attempt + 1, MAX_RETRIES);
                 }
 
