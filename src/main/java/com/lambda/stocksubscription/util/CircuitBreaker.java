@@ -1,6 +1,7 @@
 package com.lambda.stocksubscription.util;
 
 import com.lambda.stocksubscription.dollar.Dollar;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -106,8 +107,8 @@ public class CircuitBreaker {
 
     private Dollar getDefaultDollar(LocalDate date) {
         return Dollar.builder()
-            .buyingRate(null)
-            .sellingRate(null)
+            .buyingRate(BigDecimal.valueOf(1400))
+            .sellingRate(BigDecimal.valueOf(1400))
             .searchDate(date)
             .build();
     }
