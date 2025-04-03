@@ -30,7 +30,7 @@ jobs:
       - name: Install certificate
         run: |
           echo "${{ secrets.SSL_CERTIFICATE }}" > certificate.pem
-          sudo keytool -importcert -file certificate.pem -keystore /etc/ssl/certs/java/cacerts -storepass changeit -noprompt -alias customcert
+          sudo keytool -importcert -file certificate.pem -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt -alias customcert
 
       - name: Build with Gradle
         run: ./gradlew clean build -x test
