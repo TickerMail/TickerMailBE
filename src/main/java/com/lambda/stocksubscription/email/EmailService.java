@@ -155,6 +155,13 @@ public class EmailService {
         // 환율 데이터 넣기
         Map<String, Object> exchangeRateData = new HashMap<>();
         Dollar exchangeRate = dollarRepository.findBySearchDate(tradingDate);
+        if (exchangeRate == null) {
+            exchangeRate = Dollar.builder()
+                .buyingRate(BigDecimal.valueOf(1400))
+                .sellingRate(BigDecimal.valueOf(1400))
+                .searchDate(tradingDate)
+                .build();
+        }
         exchangeRateData.put("date", exchangeRate.getSearchDate().toString());
         exchangeRateData.put("usdKrwBuy", exchangeRate.getBuyingRate());
         exchangeRateData.put("usdKrwSell", exchangeRate.getSellingRate());
