@@ -166,7 +166,7 @@ public class EmailService {
         exchangeRateData.put("usdKrwBuy", exchangeRate.getBuyingRate());
         exchangeRateData.put("usdKrwSell", exchangeRate.getSellingRate());
 
-        context.setVariable("exchangeRate", exchangeRate);
+        context.setVariable("exchangeRate", exchangeRateData);
 
         // Thymeleaf 템플릿으로 이메일 본문 생성
         String emailContent = templateEngine.process("stock-price-email", context);
