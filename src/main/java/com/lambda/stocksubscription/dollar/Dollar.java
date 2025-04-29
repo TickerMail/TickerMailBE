@@ -25,16 +25,13 @@ public class Dollar {
     @Column(nullable = false)
     private LocalDate searchDate;
 
-    private BigDecimal buyingRate;
-
-    private BigDecimal sellingRate;
+    private String dollarValue;
 
     @Override
     public String toString() {
         return "Dollar{" +
             "searchDate=" + searchDate +
-            ", buyingRate=" + buyingRate +
-            ", sellingRate=" + sellingRate +
+            ", dollarValue=" + dollarValue +
             '}';
     }
 }

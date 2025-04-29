@@ -63,6 +63,7 @@ public class CircuitBreaker {
                 }
 
                 ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+
                 return parser.parseExchangeRateResponse(response.getBody(), date);
             } catch (Exception e) {
                 log.warn("API 호출 실패 (시도 {}/{}): {}", attempt + 1, MAX_RETRIES, e.getMessage());
@@ -107,8 +108,7 @@ public class CircuitBreaker {
 
     private Dollar getDefaultDollar(LocalDate date) {
         return Dollar.builder()
-            .buyingRate(BigDecimal.valueOf(1400))
-            .sellingRate(BigDecimal.valueOf(1400))
+            .dollarValue("1,400.00")
             .searchDate(date)
             .build();
     }
