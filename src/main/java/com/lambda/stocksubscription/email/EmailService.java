@@ -106,6 +106,8 @@ public class EmailService {
 
         // 해당 날짜의 주가 데이터 조회
         List<StockPrice> stockPrices = stockPriceRepository.findBySymbolInAndTradingDate(symbols, tradingDate);
+        log.info(tradingDate.toString());
+        log.info(stockPrices.toString());
 
         // 심볼 -> StockPrice 맵 생성
         Map<String, StockPrice> priceMap = stockPrices.stream()
@@ -157,14 +159,13 @@ public class EmailService {
         Dollar exchangeRate = dollarRepository.findBySearchDate(tradingDate);
         if (exchangeRate == null) {
             exchangeRate = Dollar.builder()
-                .buyingRate(BigDecimal.valueOf(1400))
-                .sellingRate(BigDecimal.valueOf(1400))
+                .dollarValue("1,400.00")
                 .searchDate(tradingDate)
                 .build();
         }
         exchangeRateData.put("date", exchangeRate.getSearchDate().toString());
-        exchangeRateData.put("usdKrwBuy", exchangeRate.getBuyingRate());
-        exchangeRateData.put("usdKrwSell", exchangeRate.getSellingRate());
+        exchangeRateData.put("usdKrwBuy", exchangeRate.getDollarValue());
+        exchangeRateData.put("usdKrwSell", exchangeRate.getDollarValue());
 
         context.setVariable("exchangeRate", exchangeRateData);
 
