@@ -43,4 +43,15 @@ public class StockPrice {
     // 전일 미국 시간으로는 장 마감 날짜
     @Column(nullable = false)
     private LocalDate tradingDate;
+
+    @Override
+    public String toString() {
+        return "id=" + id +
+            ", symbol='" + symbol + '\'' +
+            ", closingPrice=" + closingPrice +
+            ", changeAmount=" + changeAmount +
+            ", changePercent=" + changePercent +
+            ", tradingDate=" + tradingDate +
+            '}';
+    }
 }

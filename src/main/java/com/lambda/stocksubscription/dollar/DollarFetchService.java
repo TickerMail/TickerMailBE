@@ -38,12 +38,7 @@ public class DollarFetchService {
         String today = getSearchDay().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
         // API URL 구성
-        String url = UriComponentsBuilder.fromHttpUrl(apiUrl)
-            .queryParam("authkey", apiKey)
-            .queryParam("searchdate", today)
-            .queryParam("data", "AP01") // AP01: 환율 정보
-            .build()
-            .toUriString();
+        String url = apiUrl;
 
         log.info("환율 API 호출: {}", url);
 

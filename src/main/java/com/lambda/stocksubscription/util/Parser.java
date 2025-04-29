@@ -24,27 +24,14 @@ public class Parser {
         log.info("responsebody " + responseBody);
 
         // API 결과 확인
-        JsonNode node = rootNode.get(rootNode.size() - 1);
-
-        // 결과 코드 확인
-        if (node.has("result") && node.get("result").asInt() != 1) {
-            log.warn("API 결과 코드가 성공이 아님: {}", node.get("result").asText());
-            throw new Exception("환율 API 결과 코드가 성공이 아님");
-        }
-
-        if (!Objects.equals(node.get("cur_nm").asText(), "미국 달러")) throw new Exception("달러가 없음");
+        JsonNode node = rootNode.get("country");
 
         try {
             // 숫자 데이터 파싱 (콤마 제거)
-            String ttBuyingRateStr = node.has("ttb") ? node.get("ttb").asText().replace(",", "") : "0";
-            String ttSellingRateStr = node.has("tts") ? node.get("tts").asText().replace(",", "") : "0";
-
-            BigDecimal ttBuyingRate = new BigDecimal(ttBuyingRateStr);
-            BigDecimal ttSellingRate = new BigDecimal(ttSellingRateStr);
+            String dollarValue = node.get(1).get("value").asText();
 
             Dollar rate = Dollar.builder()
-                .buyingRate(ttBuyingRate)
-                .sellingRate(ttSellingRate)
+                .dollarValue(dollarValue)
                 .searchDate(date)
                 .build();
 
