@@ -12,6 +12,7 @@ import com.lambda.stocksubscription.user.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import java.math.BigDecimal;
+import java.time.ZoneId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -201,8 +202,7 @@ public class EmailService {
      * 이전 거래일 계산 (주말 및 공휴일 고려)
      */
     private LocalDate getPreviousTradingDate() {
-        LocalDate today = LocalDate.now();
-        return today;
+        return LocalDate.now(ZoneId.of("Asia/Seoul"));
     }
 
     /**
