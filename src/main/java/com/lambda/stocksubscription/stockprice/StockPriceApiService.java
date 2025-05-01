@@ -2,6 +2,7 @@ package com.lambda.stocksubscription.stockprice;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,7 +65,7 @@ public class StockPriceApiService {
             .closingPrice(new BigDecimal(String.valueOf(output.get("last"))))
             .changeAmount(new BigDecimal(String.valueOf(output.get("diff"))))
             .changePercent(new BigDecimal(String.valueOf(output.get("rate"))))
-            .tradingDate(LocalDate.now())
+            .tradingDate(LocalDate.now(ZoneId.of("Asia/Seoul")))
             .build();
 
         // 응답 처리
